@@ -39,6 +39,13 @@
     magic-string "^0.25.2"
     resolve "^1.11.0"
 
+"@rollup/plugin-json@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-json/-/plugin-json-4.0.3.tgz#747e2c2884c5a0fa00b66c9c0f3f1012cddca534"
+  integrity sha512-QMUT0HZNf4CX17LMdwaslzlYHUKTYGuuk34yYIgZrNdu+pMEfqMS55gck7HEeHBKXHM4cz5Dg1OVwythDdbbuQ==
+  dependencies:
+    "@rollup/pluginutils" "^3.0.8"
+
 "@rollup/plugin-node-resolve@^7.0.0":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-7.1.3.tgz#80de384edfbd7bfc9101164910f86078151a3eca"
@@ -86,6 +93,22 @@ acorn@^7.1.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.2.0.tgz#17ea7e40d7c8640ff54a694c889c26f31704effe"
   integrity sha512-apwXVmYVpQ34m/i71vrApRrRKCWQnZZF1+npOD0WV5xZFfwWOmKGQ2RWlfdy9vWITsenisM8M0Qeq8agcFHNiQ==
 
+aframe-environment-component@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/aframe-environment-component/-/aframe-environment-component-2.0.0.tgz#051e28d1acf907df9a7c1cfff8aecf8465eac45e"
+  integrity sha512-Z1Qyefbp0tPK+CM4CoUU0X66IRdYsfHlvA8qVQkbRUCjd8W9CsSRkXKRMhDZl2tfGZOvfvdYgcqV3YLTkbW75Q==
+
+aframe-physics-system@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/aframe-physics-system/-/aframe-physics-system-4.0.1.tgz#8cef7bd2b62088ef0e6a1757929fbebe727fc435"
+  integrity sha512-KzgWd9sCdxI+bbLNwHHIkXMDH9Z8G/w3l4z2cfdbM0JusQ5giHMq/ONVmLJXNm1YZyE+QSfsE+YwjCLnJyE25w==
+  dependencies:
+    ammo-debug-drawer "github:infinitelee/ammo-debug-drawer"
+    cannon "github:donmccurdy/cannon.js#v0.6.2-dev1"
+    three-to-ammo "github:infinitelee/three-to-ammo"
+    three-to-cannon "^1.3.0"
+    webworkify "^1.4.0"
+
 aframe@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/aframe/-/aframe-1.0.4.tgz#1b659533db0f5cf9b002c22804278da8349a32d2"
@@ -103,6 +126,10 @@ aframe@^1.0.4:
     super-three "^0.111.6"
     three-bmfont-text dmarcos/three-bmfont-text#1babdf8507c731a18f8af3b807292e2b9740955e
     webvr-polyfill "^0.10.10"
+
+"ammo-debug-drawer@github:infinitelee/ammo-debug-drawer":
+  version "1.0.1"
+  resolved "https://codeload.github.com/infinitelee/ammo-debug-drawer/tar.gz/561fd698109e61456f34136a53dd08b45d4ad9ca"
 
 an-array@^1.0.0:
   version "1.0.0"
@@ -170,6 +197,10 @@ builtin-modules@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-3.1.0.tgz#aad97c15131eb76b65b50ef208e7584cd76a7484"
   integrity sha512-k0KL0aWZuBt2lrxrcASWDfwOLMnodeQjodT/1SxEQAXsHANgo6ZC/VEaSEHCXt7aSTZ4/4H5LKa+tBXmW7Vtvw==
+
+"cannon@github:donmccurdy/cannon.js#v0.6.2-dev1":
+  version "0.6.2"
+  resolved "https://codeload.github.com/donmccurdy/cannon.js/tar.gz/022e8ba53fa83abf0ad8a0e4fd08623123838a17"
 
 cardboard-vr-display@^1.0.19:
   version "1.0.19"
@@ -639,6 +670,11 @@ resolve@^1.11.0, resolve@^1.14.2:
   dependencies:
     path-parse "^1.0.6"
 
+rollup-plugin-includepaths@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-includepaths/-/rollup-plugin-includepaths-0.2.3.tgz#244d21b9669a0debe476d825e4a02ed08c06b258"
+  integrity sha512-4QbSIZPDT+FL4SViEVCRi4cGCA64zQJu7u5qmCkO3ecHy+l9EQBsue15KfCpddfb6Br0q47V/v2+E2YUiqts9g==
+
 rollup-plugin-livereload@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-livereload/-/rollup-plugin-livereload-1.3.0.tgz#8da90df13df6502b9d982997d6ac871092f15fdd"
@@ -813,6 +849,15 @@ three-buffer-vertex-data@dmarcos/three-buffer-vertex-data#69378fc58daf27d3b1d930
   dependencies:
     flatten-vertex-data "^1.0.0"
 
+"three-to-ammo@github:infinitelee/three-to-ammo":
+  version "1.0.0"
+  resolved "https://codeload.github.com/infinitelee/three-to-ammo/tar.gz/92fd0e8300e693d4d48a603a8c446e520f9568ab"
+
+three-to-cannon@^1.3.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/three-to-cannon/-/three-to-cannon-1.4.1.tgz#37e44eb40a83089ab7fe4821d5dc9ce7aa147e49"
+  integrity sha512-AhaDXAqRg48wYBjMGo/Nxl0o67sW4/nGN3yIIfxMkQwL5nYLaLVnkz6aQNpn1vNNKuqHhqLFCZR7qSnSXzhhog==
+
 timed-out@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
@@ -846,6 +891,11 @@ webvr-polyfill@^0.10.10:
   integrity sha512-trDJEVUQnRIVAnmImjEQ0BlL1NfuWl8+eaEdu+bs4g59c7OtETi/5tFkgEFDRaWEYwHntXs/uFF3OXZuutNGGA==
   dependencies:
     cardboard-vr-display "^1.0.19"
+
+webworkify@^1.4.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/webworkify/-/webworkify-1.5.0.tgz#734ad87a774de6ebdd546e1d3e027da5b8f4a42c"
+  integrity sha512-AMcUeyXAhbACL8S2hqqdqOLqvJ8ylmIbNwUIqQujRSouf4+eUFaXbG6F1Rbu+srlJMmxQWsiU7mOJi0nMBfM1g==
 
 word-wrapper@^1.0.7:
   version "1.0.7"
