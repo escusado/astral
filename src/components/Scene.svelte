@@ -1,17 +1,7 @@
 <script>
-  // import aframe from "aframe";
-  // import "aframe-htmlembed-component";
-  // import "aframe-environment-component";
-  // import "aframe-physics-system";
-
   import Box from "components/Box.svelte";
 
   const boxColor = "#00FFFF";
-
-  window.rerender = () => {
-    console.log(">>>>>", aframe);
-    this.components.htmlembed.forceRender();
-  };
 </script>
 
 <a-scene physics="debug:true; friction: 0.1; restitution: 0.5">
@@ -26,6 +16,12 @@
     color="#4CC3D9"
     shadow
     mixin="test" />
+  <a-sphere
+    position="0 3.75 -5"
+    radius="1.25"
+    color="#EF2D5E"
+    shadow
+    dynamic-body />
   <a-sphere
     position="0 3.75 -5"
     radius="1.25"
