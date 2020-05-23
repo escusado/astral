@@ -1,1 +1,6 @@
-<a-box position="-1 3.5 -3" color="#FFF" shadow mixin="test" />
+<script>
+  export let position;
+  export let alive;
+</script>
+
+<a-box {position} {alive} color="#FFF" shadow />

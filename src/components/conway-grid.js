@@ -10,7 +10,7 @@ export default {
     this.width = this.size;
     this.height = this.size;
     this.doCalculateGeneration = true;
-    this.generationDelay = 500;
+    this.generationDelay = 1000;
     this.present = [];
     this.future = [];
 
@@ -49,10 +49,10 @@ export default {
             let x = l + i;
             let y = m + j;
 
+            // mirror edges
             if (x < 0) {
               x = this.width + i;
             }
-
             if (y < 0) {
               y = this.height + j;
             }
@@ -60,7 +60,6 @@ export default {
             if (x === this.width) {
               x = 0;
             }
-
             if (y === this.height) {
               y = 0;
             }
@@ -103,8 +102,10 @@ export default {
     if (this.doCalculateGeneration) {
       this.calculateGeneration();
       this.present = JSON.parse(JSON.stringify(this.future));
-      console.clear();
-      console.table(this.present);
+      this.present[5][5] = Math.round(Math.random());
+      // console.clear();
+      // console.table(this.present);
+      this.el.emit("generation", { present: this.present }, false);
     }
   },
 };

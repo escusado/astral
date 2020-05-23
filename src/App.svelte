@@ -1,5 +1,4 @@
 <script>
-  import Text from "components/Text.svelte";
   import MainScene from "scenes/Main.svelte";
 
   const Dependencies = [
