@@ -4,7 +4,9 @@
   import GameOfLife from "entities/GameOfLife.svelte";
 </script>
 
-<a-scene physics="debug:true; friction: 0.1; restitution: 0.5">
+<a-scene
+  conway={{ size: 200 }}
+  physics="debug:true; friction: 0.1; restitution: 0.5">
   <Stage />
   <GameOfLife />
 

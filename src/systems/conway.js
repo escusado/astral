@@ -1,20 +1,22 @@
+const SIZE = 50;
+const GENERATIONDELAY = 100;
+
 export default {
   name: "conway",
 
   schema: {
     size: { type: "number" },
+    generationDelay: { type: "number" },
   },
 
   init: function () {
-    this.size = this.size || 10;
+    this.size = this.data.size || SIZE;
     this.width = this.size;
     this.height = this.size;
 
-    this.generationDelay = 500;
+    this.generationDelay = this.data.generationDelay || GENERATIONDELAY;
     this.present = [];
     this.future = [];
-
-    this.entities = [];
 
     this.seedLife();
   },
@@ -37,15 +39,6 @@ export default {
 
   amIAlive: function (id) {
     return this.present[id.x][id.y];
-  },
-
-  registerMe: function (el) {
-    this.entities.push(el);
-  },
-
-  unregisterMe: function (el) {
-    var index = this.entities.indexOf(el);
-    this.entities.splice(index, 1);
   },
 
   calculateGeneration: function () {
