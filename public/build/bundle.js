@@ -1,10 +1,7 @@
 
 (function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-    (global = global || self, global.app = factory());
-}(this, (function () { 'use strict';
+var app = (function () {
+    'use strict';
 
     function noop() { }
     function add_location(element, file, line, column, char) {
@@ -2489,47 +2486,8 @@
     var internal_146 = internal.validate_store;
     var internal_147 = internal.xlink_attr;
 
-    var Rotator = {
-      name: "rotator",
-
-      schema: {
-        speed: { type: "number" },
-      },
-
-      init: function () {
-        this.delta = 0;
-      },
-
-      tick: function (time, timeDelta) {
-        const currentRotation = this.el.object3D.rotation;
-
-        this.delta += (timeDelta / 10) * this.data.speed;
-
-        this.el.setAttribute("rotation", `0 ${this.delta} 0`);
-      },
-    };
-
-    var Alive = {
-      name: "alive",
-
-      schema: {
-        x: { type: "number" },
-        y: { type: "number" },
-      },
-
-      init: function () {
-        // this.el.addEventListener("generation", (ev) => {
-        //   console.log("me:", this.data.x, this.data.y);
-        // });
-      },
-
-      tick: function (time, timeDelta) {
-        // this.el.setAttribute("color", this.data.living ? "#F00" : "#0F0");
-      },
-    };
-
-    var ConwayGrid = {
-      name: "conway-grid",
+    var ConwaySystem = {
+      name: "conway",
 
       schema: {
         size: { type: "number" },
@@ -2539,10 +2497,12 @@
         this.size = this.size || 10;
         this.width = this.size;
         this.height = this.size;
-        this.doCalculateGeneration = true;
-        this.generationDelay = 1000;
+
+        this.generationDelay = 500;
         this.present = [];
         this.future = [];
+
+        this.entities = [];
 
         this.seedLife();
       },
@@ -2560,12 +2520,25 @@
           }
         }
         // console.table(this.present);
+        this.calculateGeneration();
+      },
+
+      amIAlive: function (id) {
+        return this.present[id.x][id.y];
+      },
+
+      registerMe: function (el) {
+        this.entities.push(el);
+      },
+
+      unregisterMe: function (el) {
+        var index = this.entities.indexOf(el);
+        this.entities.splice(index, 1);
       },
 
       calculateGeneration: function () {
-        this.doCalculateGeneration = false;
         setTimeout(() => {
-          this.doCalculateGeneration = true;
+          this.calculateGeneration();
         }, this.generationDelay);
 
         // ported from: geeksforgeeks.org/program-for-conways-game-of-life
@@ -2626,16 +2599,69 @@
             }
           }
         }
+
+        this.present = JSON.parse(JSON.stringify(this.future));
+      },
+    };
+
+    var Rotator = {
+      name: "rotator",
+
+      schema: {
+        speed: { type: "number" },
+      },
+
+      init: function () {
+        this.delta = 0;
       },
 
       tick: function (time, timeDelta) {
-        if (this.doCalculateGeneration) {
-          this.calculateGeneration();
-          this.present = JSON.parse(JSON.stringify(this.future));
-          this.present[5][5] = Math.round(Math.random());
-          // console.clear();
-          // console.table(this.present);
-          this.el.emit("generation", { present: this.present }, false);
+        const currentRotation = this.el.object3D.rotation;
+
+        this.delta += (timeDelta / 10) * this.data.speed;
+
+        this.el.setAttribute("rotation", `0 ${this.delta} 0`);
+      },
+    };
+
+    var Alive = {
+      name: "alive",
+
+      schema: {
+        x: { type: "number" },
+        y: { type: "number" },
+      },
+
+      init: function () {
+        // this.el.addEventListener("generation", (ev) => {
+        //   console.log("me:", this.data.x, this.data.y);
+        // });
+      },
+
+      tick: function (time, timeDelta) {
+        // this.el.setAttribute("color", this.data.living ? "#F00" : "#0F0");
+      },
+    };
+
+    var ConwayComponent = {
+      name: "conway",
+
+      schema: {
+        id: { type: "vec3" },
+      },
+
+      tick: function (time, timeDelta) {
+        const alive = this.system.amIAlive(this.data.id);
+
+        this.el.setAttribute("color", alive ? "#2a9d8f" : "#e76f51");
+
+        if (alive) {
+          this.el.setAttribute("opacity", 1);
+        } else {
+          const currentOpacity =
+            parseFloat(this.el.components.material.attrValue.opacity) -
+            timeDelta / 1000;
+          this.el.setAttribute("opacity", currentOpacity);
         }
       },
     };
@@ -2766,146 +2792,44 @@
 
     function get_each_context_1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[9] = list[i];
-    	child_ctx[11] = i;
+    	child_ctx[4] = list[i];
+    	child_ctx[6] = i;
     	return child_ctx;
     }
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[6] = list[i];
-    	child_ctx[8] = i;
+    	child_ctx[1] = list[i];
+    	child_ctx[3] = i;
     	return child_ctx;
     }
 
-    // (38:2) {#if gridTarget}
-    function create_if_block(ctx) {
-    	let each_1_anchor;
-    	let current;
-    	let each_value = /*conwayGridEl*/ ctx[0];
-    	validate_each_argument(each_value);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value.length; i += 1) {
-    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
-    	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
-
-    	const block = {
-    		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty();
-    		},
-    		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(target, anchor);
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*conwayGridEl, offset, Math*/ 1) {
-    				each_value = /*conwayGridEl*/ ctx[0];
-    				validate_each_argument(each_value);
-    				let i;
-
-    				for (i = 0; i < each_value.length; i += 1) {
-    					const child_ctx = get_each_context(ctx, each_value, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
-    					} else {
-    						each_blocks[i] = create_each_block(child_ctx);
-    						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-    					}
-    				}
-
-    				group_outros();
-
-    				for (i = each_value.length; i < each_blocks.length; i += 1) {
-    					out(i);
-    				}
-
-    				check_outros();
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			for (let i = 0; i < each_value.length; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			each_blocks = each_blocks.filter(Boolean);
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(each_1_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block.name,
-    		type: "if",
-    		source: "(38:2) {#if gridTarget}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (40:6) {#each row as cell, y}
+    // (24:4) {#each row as cell, y}
     function create_each_block_1(ctx) {
-    	let current;
-
-    	const cell = new Cell({
-    			props: {
-    				position: `${/*x*/ ctx[8] - offset} ${0.5 + Math.random() * (1 - 0.5)} ${/*y*/ ctx[11] - offset}`,
-    				alive: { x: /*x*/ ctx[8], y: /*y*/ ctx[11] }
-    			},
-    			$$inline: true
-    		});
+    	let a_box;
+    	let a_box_position_value;
+    	let a_box_conway_value;
 
     	const block = {
     		c: function create() {
-    			create_component(cell.$$.fragment);
+    			a_box = element("a-box");
+    			set_custom_element_data(a_box, "transparent", "");
+    			set_custom_element_data(a_box, "opacity", "0.8");
+    			set_custom_element_data(a_box, "shadow", "");
+    			set_custom_element_data(a_box, "position", a_box_position_value = `${/*x*/ ctx[3] - offset} ${0.5 + Math.random() * (1 - 0.5)} ${/*y*/ ctx[6] - offset}`);
+
+    			set_custom_element_data(a_box, "conway", a_box_conway_value = {
+    				id: { x: /*x*/ ctx[3], y: /*y*/ ctx[6], z: 0 }
+    			});
+
+    			add_location(a_box, file$3, 24, 6, 670);
     		},
     		m: function mount(target, anchor) {
-    			mount_component(cell, target, anchor);
-    			current = true;
+    			insert_dev(target, a_box, anchor);
     		},
     		p: noop,
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(cell.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(cell.$$.fragment, local);
-    			current = false;
-    		},
     		d: function destroy(detaching) {
-    			destroy_component(cell, detaching);
+    			if (detaching) detach_dev(a_box);
     		}
     	};
 
@@ -2913,28 +2837,23 @@
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(40:6) {#each row as cell, y}",
+    		source: "(24:4) {#each row as cell, y}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (39:4) {#each conwayGridEl as row, x}
+    // (23:2) {#each conwayGridEl as row, x}
     function create_each_block(ctx) {
     	let each_1_anchor;
-    	let current;
-    	let each_value_1 = /*row*/ ctx[6];
+    	let each_value_1 = /*row*/ ctx[1];
     	validate_each_argument(each_value_1);
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
     		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
     	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
 
     	const block = {
     		c: function create() {
@@ -2950,11 +2869,10 @@
     			}
 
     			insert_dev(target, each_1_anchor, anchor);
-    			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*offset, Math, conwayGridEl*/ 1) {
-    				each_value_1 = /*row*/ ctx[6];
+    			if (dirty & /*offset, Math*/ 0) {
+    				each_value_1 = /*row*/ ctx[1];
     				validate_each_argument(each_value_1);
     				let i;
 
@@ -2963,41 +2881,19 @@
 
     					if (each_blocks[i]) {
     						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
     					} else {
     						each_blocks[i] = create_each_block_1(child_ctx);
     						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
     						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
     					}
     				}
 
-    				group_outros();
-
-    				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
-    					out(i);
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
     				}
 
-    				check_outros();
+    				each_blocks.length = each_value_1.length;
     			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			for (let i = 0; i < each_value_1.length; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			each_blocks = each_blocks.filter(Boolean);
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
-    			current = false;
     		},
     		d: function destroy(detaching) {
     			destroy_each(each_blocks, detaching);
@@ -3009,7 +2905,7 @@
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(39:4) {#each conwayGridEl as row, x}",
+    		source: "(23:2) {#each conwayGridEl as row, x}",
     		ctx
     	});
 
@@ -3017,85 +2913,65 @@
     }
 
     function create_fragment$3(ctx) {
-    	let a_entity1;
-    	let a_entity0;
-    	let a_entity0_conway_grid_value;
-    	let t0;
-    	let a_box;
-    	let t1;
-    	let current;
-    	let dispose;
-    	let if_block = /*gridTarget*/ ctx[1] && create_if_block(ctx);
+    	let a_entity;
+    	let each_value = /*conwayGridEl*/ ctx[0];
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
 
     	const block = {
     		c: function create() {
-    			a_entity1 = element("a-entity");
-    			a_entity0 = element("a-entity");
-    			t0 = space();
-    			a_box = element("a-box");
-    			t1 = space();
-    			if (if_block) if_block.c();
-    			set_custom_element_data(a_entity0, "conway-grid", a_entity0_conway_grid_value = { size: gridSize });
-    			add_location(a_entity0, file$3, 32, 2, 846);
-    			set_custom_element_data(a_box, "position", "0 2.5 0");
-    			set_custom_element_data(a_box, "rotator", "speed: 0.4");
-    			set_custom_element_data(a_box, "shadow", "");
-    			add_location(a_box, file$3, 36, 2, 964);
-    			add_location(a_entity1, file$3, 31, 0, 832);
+    			a_entity = element("a-entity");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			add_location(a_entity, file$3, 21, 0, 590);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
-    		m: function mount(target, anchor, remount) {
-    			insert_dev(target, a_entity1, anchor);
-    			append_dev(a_entity1, a_entity0);
-    			/*a_entity0_binding*/ ctx[5](a_entity0);
-    			append_dev(a_entity1, t0);
-    			append_dev(a_entity1, a_box);
-    			append_dev(a_entity1, t1);
-    			if (if_block) if_block.m(a_entity1, null);
-    			current = true;
-    			if (remount) dispose();
-    			dispose = listen_dev(a_entity0, "generation", /*onGeneration*/ ctx[2], false, false, false);
-    		},
-    		p: function update(ctx, [dirty]) {
-    			if (/*gridTarget*/ ctx[1]) {
-    				if (if_block) {
-    					if_block.p(ctx, dirty);
+    		m: function mount(target, anchor) {
+    			insert_dev(target, a_entity, anchor);
 
-    					if (dirty & /*gridTarget*/ 2) {
-    						transition_in(if_block, 1);
-    					}
-    				} else {
-    					if_block = create_if_block(ctx);
-    					if_block.c();
-    					transition_in(if_block, 1);
-    					if_block.m(a_entity1, null);
-    				}
-    			} else if (if_block) {
-    				group_outros();
-
-    				transition_out(if_block, 1, 1, () => {
-    					if_block = null;
-    				});
-
-    				check_outros();
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(a_entity, null);
     			}
     		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(if_block);
-    			current = true;
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*conwayGridEl, offset, Math*/ 1) {
+    				each_value = /*conwayGridEl*/ ctx[0];
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(a_entity, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
     		},
-    		o: function outro(local) {
-    			transition_out(if_block);
-    			current = false;
-    		},
+    		i: noop,
+    		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(a_entity1);
-    			/*a_entity0_binding*/ ctx[5](null);
-    			if (if_block) if_block.d();
-    			dispose();
+    			if (detaching) detach_dev(a_entity);
+    			destroy_each(each_blocks, detaching);
     		}
     	};
 
@@ -3114,18 +2990,9 @@
     const gridSize = 10;
 
     function instance$3($$self, $$props, $$invalidate) {
-    	AFRAME.registerComponent(Rotator.name, Rotator);
-    	AFRAME.registerComponent(ConwayGrid.name, ConwayGrid);
-    	AFRAME.registerComponent(Alive.name, Alive);
+    	AFRAME.registerSystem(ConwaySystem.name, ConwaySystem);
+    	AFRAME.registerComponent(ConwayComponent.name, ConwayComponent);
     	let conwayGridEl = new Array(gridSize).fill(null).map(() => new Array(gridSize).fill(null));
-    	let otherGrid = new Array(gridSize).fill(null).map(() => new Array(gridSize).fill(null));
-    	const cellColors = { alive: "green", death: "black" };
-    	let gridTarget;
-
-    	const onGeneration = ev => {
-    		$$invalidate(1, gridTarget = ev.target);
-    	};
-
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -3135,45 +3002,27 @@
     	let { $$slots = {}, $$scope } = $$props;
     	validate_slots("GameOfLife", $$slots, []);
 
-    	function a_entity0_binding($$value) {
-    		binding_callbacks[$$value ? "unshift" : "push"](() => {
-    			$$invalidate(0, conwayGridEl = $$value);
-    		});
-    	}
-
     	$$self.$capture_state = () => ({
     		onMount: internal_101,
+    		ConwaySystem,
     		Rotator,
     		Alive,
-    		ConwayGrid,
+    		ConwayComponent,
     		Cell,
     		offset,
     		gridSize,
-    		conwayGridEl,
-    		otherGrid,
-    		cellColors,
-    		gridTarget,
-    		onGeneration
+    		conwayGridEl
     	});
 
     	$$self.$inject_state = $$props => {
     		if ("conwayGridEl" in $$props) $$invalidate(0, conwayGridEl = $$props.conwayGridEl);
-    		if ("otherGrid" in $$props) otherGrid = $$props.otherGrid;
-    		if ("gridTarget" in $$props) $$invalidate(1, gridTarget = $$props.gridTarget);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [
-    		conwayGridEl,
-    		gridTarget,
-    		onGeneration,
-    		otherGrid,
-    		cellColors,
-    		a_entity0_binding
-    	];
+    	return [conwayGridEl];
     }
 
     class GameOfLife extends SvelteComponentDev {
@@ -3319,7 +3168,7 @@
     }
 
     // (33:2) {#if dependenciesLoaded}
-    function create_if_block$1(ctx) {
+    function create_if_block(ctx) {
     	let current;
     	const mainscene = new Main({ $$inline: true });
 
@@ -3347,7 +3196,7 @@
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$1.name,
+    		id: create_if_block.name,
     		type: "if",
     		source: "(33:2) {#if dependenciesLoaded}",
     		ctx
@@ -3362,7 +3211,7 @@
     	let main;
     	let current;
     	let if_block0 = /*reloading*/ ctx[1] && create_if_block_1(ctx);
-    	let if_block1 = /*dependenciesLoaded*/ ctx[0] && create_if_block$1(ctx);
+    	let if_block1 = /*dependenciesLoaded*/ ctx[0] && create_if_block(ctx);
 
     	const block = {
     		c: function create() {
@@ -3404,7 +3253,7 @@
     						transition_in(if_block1, 1);
     					}
     				} else {
-    					if_block1 = create_if_block$1(ctx);
+    					if_block1 = create_if_block(ctx);
     					if_block1.c();
     					transition_in(if_block1, 1);
     					if_block1.m(main, null);
@@ -3532,5 +3381,5 @@
 
     return app;
 
-})));
+}());
 //# sourceMappingURL=bundle.js.map

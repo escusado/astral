@@ -1,5 +1,5 @@
 export default {
-  name: "conway-grid",
+  name: "conway",
 
   schema: {
     size: { type: "number" },
@@ -9,10 +9,12 @@ export default {
     this.size = this.size || 10;
     this.width = this.size;
     this.height = this.size;
-    this.doCalculateGeneration = true;
-    this.generationDelay = 1000;
+
+    this.generationDelay = 500;
     this.present = [];
     this.future = [];
+
+    this.entities = [];
 
     this.seedLife();
   },
@@ -30,12 +32,25 @@ export default {
       }
     }
     // console.table(this.present);
+    this.calculateGeneration();
+  },
+
+  amIAlive: function (id) {
+    return this.present[id.x][id.y];
+  },
+
+  registerMe: function (el) {
+    this.entities.push(el);
+  },
+
+  unregisterMe: function (el) {
+    var index = this.entities.indexOf(el);
+    this.entities.splice(index, 1);
   },
 
   calculateGeneration: function () {
-    this.doCalculateGeneration = false;
     setTimeout(() => {
-      this.doCalculateGeneration = true;
+      this.calculateGeneration();
     }, this.generationDelay);
 
     // ported from: geeksforgeeks.org/program-for-conways-game-of-life
@@ -96,16 +111,7 @@ export default {
         }
       }
     }
-  },
 
-  tick: function (time, timeDelta) {
-    if (this.doCalculateGeneration) {
-      this.calculateGeneration();
-      this.present = JSON.parse(JSON.stringify(this.future));
-      this.present[5][5] = Math.round(Math.random());
-      // console.clear();
-      // console.table(this.present);
-      this.el.emit("generation", { present: this.present }, false);
-    }
+    this.present = JSON.parse(JSON.stringify(this.future));
   },
 };
