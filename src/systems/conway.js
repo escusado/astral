@@ -1,5 +1,5 @@
 const SIZE = 50;
-const GENERATIONDELAY = 100;
+const GENERATIONDELAY = 10;
 
 export default {
   name: "conway",
