@@ -12,7 +12,9 @@
 
 <a-entity>
   <a-entity position="0 12 12" rotation="-60 0 0">
-    <a-camera look-controls="enabled: false;" wasd-controls="enabled: false;" />
+    <a-camera
+      look-controls="touchEnabled: false;"
+      wasd-controls="enabled: false;" />
   </a-entity>
   <!-- <a-entity {environment} /> -->
   <a-entity light="type: ambient; intensity: 0.8;" />
