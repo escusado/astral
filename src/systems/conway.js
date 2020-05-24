@@ -30,6 +30,7 @@ export default {
         this.randomizeColors();
       }
     };
+    this.calculateGeneration();
   },
 
   randomizeColors: function () {
@@ -53,7 +54,6 @@ export default {
       }
     }
     // console.table(this.present);
-    this.calculateGeneration();
   },
 
   amIAlive: function (id) {
