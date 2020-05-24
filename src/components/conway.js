@@ -11,18 +11,28 @@ export default {
   },
 
   init: function () {
-    this.colorScale = Chroma.scale([
-      "#000",
-      "#333333",
-      "#660044",
-      // "#00ff00",
-      "#FFff00",
-    ])
-      .mode("lch")
-      .colors(256);
+    this.darkColor = "";
+    this.brightColor = "";
   },
 
   tick: function (time, timeDelta) {
+    // catch reseeded life and update the color pallete
+    if (
+      this.brightColor !== this.system.brightColor ||
+      this.darkColor !== this.system.darkColor
+    ) {
+      this.brightColor = this.system.brightColor;
+      this.darkColor = this.system.darkColor;
+      this.colorScale = Chroma.scale([
+        "#000000",
+        "#333333",
+        this.system.darkColor,
+        this.system.brightColor,
+      ])
+        .mode("lch")
+        .colors(256);
+    }
+
     const decreaseDelta = timeDelta / 1000 - Math.random() / 100;
     const alive = this.system.amIAlive(this.data.id);
     const x = this.el.components.position.data.x;
@@ -35,13 +45,7 @@ export default {
 
     if (alive) {
       y = MAX_Y;
-      currentColorIndex = this.colorScale.length - 1;
-      // currentColorIndex = Math.round(
-      //   Math.random() *
-      //     (this.colorScale.length -
-      //       (this.colorScale.length - this.colorScale.length / 8)) +
-      //     (this.colorScale.length - this.colorScale.length / 8)
-      // );
+      currentColorIndex = this.colorScale.length;
     } else {
       if (y <= MIN_Y) {
         y = MIN_Y;
@@ -53,10 +57,12 @@ export default {
       }
     }
 
-    // if (this.data.id.x == 10 && this.data.id.y == 10) {
-    //   console.log(">>>>", currentColorIndex);
-    // }
     this.el.setAttribute("position", { x, y, z });
-    this.el.setAttribute("color", this.colorScale[currentColorIndex]);
+    this.el.setAttribute(
+      "color",
+      this.colorScale.length === currentColorIndex
+        ? "#FFFFFF"
+        : this.colorScale[currentColorIndex]
+    );
   },
 };

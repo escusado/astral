@@ -1,5 +1,5 @@
 const SIZE = 30;
-const GENERATIONDELAY = 80;
+const GENERATIONDELAY = 100;
 
 export default {
   name: "conway",
@@ -19,11 +19,22 @@ export default {
     this.future = [];
 
     this.seedLife();
+
+    this.randomizeColors();
     document.body.onkeyup = (e) => {
       if (e.keyCode == 32) {
         this.seedLife();
+        this.randomizeColors();
       }
     };
+  },
+
+  randomizeColors: function () {
+    const darkColors = ["#990044", "#005544", "#003399", "#666600"];
+    const brightColors = ["#ff0044", "#FFff00", "#0033ff", "#33aa44"];
+    this.darkColor = darkColors[Math.floor(Math.random() * darkColors.length)];
+    this.brightColor =
+      brightColors[Math.floor(Math.random() * brightColors.length)];
   },
 
   seedLife: function () {
