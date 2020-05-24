@@ -11,7 +11,9 @@
 </script>
 
 <a-entity>
-  <a-entity position="0 12 12" rotation="-60 0 0">
+  <a-entity
+    position="0 12 12"
+    rotation={`${AFRAME.utils.device.isMobile() ? -10 : -60} 0 0`}>
     <a-camera
       look-controls="touchEnabled: false;"
       wasd-controls="enabled: false;" />
