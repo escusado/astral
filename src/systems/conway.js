@@ -30,15 +30,25 @@ export default {
         this.randomizeColors();
       }
     };
+
+    document.body.addEventListener("seed", () => {
+      this.seedLife();
+      this.randomizeColors();
+    });
+
     this.calculateGeneration();
   },
 
   randomizeColors: function () {
-    this.colorScale = Chroma.scale(
-      ColorPalletes[Math.floor(Math.random() * ColorPalletes.length)]
-    )
-      .mode("lch")
-      .colors(256);
+    let pallete =
+      ColorPalletes[Math.floor(Math.random() * ColorPalletes.length)];
+
+    // introduce more randomness
+    if (Math.round(Math.random())) {
+      pallete = pallete.reverse();
+    }
+
+    this.colorScale = Chroma.scale(pallete).mode("lch").colors(256);
   },
 
   seedLife: function () {

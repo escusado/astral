@@ -14,10 +14,16 @@
   </head>
 
   <body>
-    <div style="position: absolute; z-index: 1; top: 10px; left: 10px;">
-      <div style="font-size: 24px; color: 333;">
+    <div style="position: absolute; z-index: 1; bottom: 10px; right: 10px;">
+      <!-- <div style="font-size: 24px; color: 333;">
         Space bar to seed life 🌱
-      </div>
+      </div> -->
+      <button
+        onclick="javascript:document.body.dispatchEvent( new Event('seed'))"
+        style="font-size: 24px; color: 333;"
+      >
+        seed life 🌱
+      </button>
       <div>
         <a style="font-size: 12px; color: #77f;" href="http://toily.mx"
           ><b>🌏 by toy</b></a

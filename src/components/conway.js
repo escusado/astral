@@ -10,13 +10,13 @@ export default {
     this.alive = false;
     this.MIN_Y =
       window.CONWAY_CELL_SIZE + (Math.random() * window.CONWAY_CELL_SIZE) / 4;
-    MAX_Y = window.CONWAY_CELL_SIZE * 1.8;
-    console.log(">>>>", this.MIN_Y, MAX_Y);
+    MAX_Y = window.CONWAY_CELL_SIZE * 1.8; // 1.8 to prevent the cube to fully go up
   },
 
   tick: function (time, timeDelta) {
     this.alive = this.system.amIAlive(this.data.id);
 
+    // random dying speed
     const decreaseDelta = timeDelta / 500 - Math.random() / 100;
 
     const x = this.el.components.position.data.x;
@@ -28,21 +28,31 @@ export default {
     );
 
     if (this.alive) {
+      // become alive
       y = MAX_Y;
       currentColorIndex = this.system.colorScale.length - 1;
     } else {
+      // totally death do nothing
       if (y <= this.MIN_Y) {
-        y = this.MIN_Y;
-        currentColorIndex = Math.round(
-          Math.random() * (this.system.colorScale.length / 20)
-        );
         return;
       } else {
+        // dying
         y -= decreaseDelta;
       }
     }
 
-    this.el.setAttribute("color", this.system.colorScale[currentColorIndex]);
+    // random last color oscilating between the first 10% of the scale
+    if (y <= this.MIN_Y) {
+      currentColorIndex = Math.round(
+        Math.random() * (this.system.colorScale.length / 8)
+      );
+    }
+
+    this.el.setAttribute(
+      "color",
+      this.system.colorScale[currentColorIndex] ||
+        this.system.colorScale[this.system.colorScale.length - 1]
+    );
     this.el.setAttribute("position", { x, y, z });
   },
 };
