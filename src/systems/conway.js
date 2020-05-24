@@ -1,5 +1,5 @@
-const SIZE = 50;
-const GENERATIONDELAY = 10;
+const SIZE = 30;
+const GENERATIONDELAY = 80;
 
 export default {
   name: "conway",
@@ -10,7 +10,7 @@ export default {
   },
 
   init: function () {
-    this.size = this.data.size || SIZE;
+    this.size = this.data.size || window.CONWAY_GRID_SIZE;
     this.width = this.size;
     this.height = this.size;
 
@@ -19,6 +19,11 @@ export default {
     this.future = [];
 
     this.seedLife();
+    document.body.onkeyup = (e) => {
+      if (e.keyCode == 32) {
+        this.seedLife();
+      }
+    };
   },
 
   seedLife: function () {

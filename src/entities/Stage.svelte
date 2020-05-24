@@ -2,16 +2,16 @@
   const FloorSize = 100;
 
   const environment = {
-    preset: "forest",
-    dressingAmount: 1000,
-    skyType: "gradient",
-    skyColor: "#00F",
-    horizonColor: "#994"
+    preset: "dream"
+    // dressingAmount: 1000,
+    // skyType: "gradient",
+    // skyColor: "#FFF"
+    // horizonColor: "#994"
   };
 </script>
 
 <a-entity>
-  <a-entity position="0 10 10" rotation="-40 0 0">
+  <a-entity position="0 12 12" rotation="-60 0 0">
     <a-camera wasd-controls="acceleration: 1000" />
   </a-entity>
   <a-entity {environment} />

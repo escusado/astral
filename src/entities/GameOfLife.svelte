@@ -1,4 +1,6 @@
 <script>
+  window.CONWAY_GRID_SIZE = 20;
+
   import ConwaySystem from "systems/conway.js";
   import ConwayComponent from "components/conway.js";
   import Rotator from "components/rotator.js";
@@ -7,7 +9,7 @@
   AFRAME.registerComponent(ConwayComponent.name, ConwayComponent);
   AFRAME.registerComponent(Rotator.name, Rotator);
 
-  const gridSize = 50;
+  const gridSize = window.CONWAY_GRID_SIZE;
   const cellSize = 1;
   const offset = (cellSize * gridSize) / 2;
   let conwayGridEl = new Array(gridSize)

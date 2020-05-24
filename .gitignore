@@ -5,3 +5,4 @@
 node_modules
 *.mapdist
 public/bundle.*
+public/build/
