@@ -1,5 +1,7 @@
-const SIZE = 30;
 const GENERATIONDELAY = 100;
+
+import Chroma from "chroma-js";
+import ColorPalletes from "util/color-palletes.js";
 
 export default {
   name: "conway",
@@ -17,6 +19,7 @@ export default {
     this.generationDelay = this.data.generationDelay || GENERATIONDELAY;
     this.present = [];
     this.future = [];
+    this.colorScale = [];
 
     this.seedLife();
 
@@ -30,11 +33,11 @@ export default {
   },
 
   randomizeColors: function () {
-    const darkColors = ["#990044", "#005544", "#003399", "#666600"];
-    const brightColors = ["#ff0044", "#FFff00", "#0033ff", "#33aa44"];
-    this.darkColor = darkColors[Math.floor(Math.random() * darkColors.length)];
-    this.brightColor =
-      brightColors[Math.floor(Math.random() * brightColors.length)];
+    this.colorScale = Chroma.scale(
+      ColorPalletes[Math.floor(Math.random() * ColorPalletes.length)]
+    )
+      .mode("lch")
+      .colors(256);
   },
 
   seedLife: function () {

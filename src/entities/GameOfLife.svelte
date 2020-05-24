@@ -1,5 +1,6 @@
 <script>
   window.CONWAY_GRID_SIZE = 20;
+  window.CONWAY_CELL_SIZE = 1;
 
   import ConwaySystem from "systems/conway.js";
   import ConwayComponent from "components/conway.js";
@@ -10,7 +11,7 @@
   AFRAME.registerComponent(Rotator.name, Rotator);
 
   const gridSize = window.CONWAY_GRID_SIZE;
-  const cellSize = 1;
+  const cellSize = window.CONWAY_CELL_SIZE;
   const offset = (cellSize * gridSize) / 2;
   let conwayGridEl = new Array(gridSize)
     .fill(null)
@@ -21,6 +22,7 @@
   {#each conwayGridEl as row, x}
     {#each row as cell, y}
       <a-box
+        shadow="cast: true; receive: true"
         scale={`${cellSize} ${cellSize} ${cellSize}`}
         position={`${x * cellSize - offset} 1 ${y * cellSize - offset}`}
         conway={{ id: { x, y, z: 0 } }} />
