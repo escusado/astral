@@ -4,7 +4,7 @@
   import GameOfLife from "entities/GameOfLife.svelte";
 </script>
 
-<a-scene physics="driver: ammo; debug: true; gravity: -9.8; debugDrawMode: 1">
+<a-scene physics="driver: ammo;">
   <Stage />
   <GameOfLife />
 

@@ -11,10 +11,10 @@
       rotation="-90 0 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#EF2D5E"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
 
     <a-plane
@@ -24,10 +24,10 @@
       rotation="180 0 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#332D5E"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
 
     <a-plane
@@ -36,10 +36,10 @@
       rotation="180 90 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#332DFF"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
   </a-entity>
 
@@ -49,10 +49,10 @@
       rotation="-90 0 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#EF2D5E"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
 
     <a-plane
@@ -62,10 +62,10 @@
       rotation="180 0 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#332D5E"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
 
     <a-plane
@@ -74,10 +74,10 @@
       rotation="180 90 0"
       width={size + PADDING * 2}
       height={size + PADDING * 2}
-      opacity="0.2"
+      opacity="0"
       shadow
-      color="#332DFF"
-      ammo-body="type: kinematic;"
+      ammo-body="type: kinematic; emitCollisionEvents: true;
+      collisionFilterGroup: 3; collisionFilterMask: 2;"
       ammo-shape="type: box;" />
 
   </a-entity>

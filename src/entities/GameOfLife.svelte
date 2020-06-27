@@ -28,15 +28,16 @@
     position="0 3.75 -5"
     radius="0.5"
     color="#22aaFF"
-    opacity="0.8"
     shadow
     conway-seed
-    ammo-body="emitCollisionEvents: true;"
+    ammo-body="type: dynamic; emitCollisionEvents: true; collisionFilterGroup:
+    3; collisionFilterMask: 2;"
     ammo-shape="type: sphere;" />
   {#each conwayGridEl as row, x}
     {#each row as cell, y}
       <a-box
-        ammo-body="type: kinematic;"
+        ammo-body="type: kinematic; emitCollisionEvents: true;
+        collisionFilterGroup: 3; collisionFilterMask: 2;"
         ammo-shape="type: box;"
         shadow="cast: true; receive: true"
         scale={`${cellSize} ${cellSize} ${cellSize}`}
