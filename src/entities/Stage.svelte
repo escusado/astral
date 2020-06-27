@@ -13,10 +13,10 @@
 <a-entity>
   <a-entity
     position="0 12 12"
-    rotation={`${AFRAME.utils.device.isMobile() ? -10 : -60} 0 0`}>
+    rotation={`${AFRAME.utils.device.isMobile() ? -5 : -60} 0 0`}>
     <a-camera
       look-controls="touchEnabled: false;"
-      wasd-controls="enabled: false;" />
+      wasd-controls="enabled: true; acceleration:1000;" />
   </a-entity>
   <!-- <a-entity {environment} /> -->
   <a-entity light="type: ambient; intensity: 0.8;" />

@@ -2,9 +2,9 @@
   import MainScene from "scenes/Main.svelte";
 
   const Dependencies = [
-    "//aframe.io/releases/1.0.4/aframe.js",
-    "//cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js",
-    "//unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"
+    "/deps/aframe.js",
+    "/deps/ammo.wasm.js",
+    "/deps/aframe-physics-system-ammo-build.js"
   ];
 
   // ordered dependency loader

@@ -1,14 +1,18 @@
 <script>
   window.CONWAY_GRID_SIZE = 20;
-  window.CONWAY_CELL_SIZE = 1;
+  window.CONWAY_CELL_SIZE = 1.2;
 
-  import ConwaySystem from "systems/conway.js";
+  import CubeBounds from "entities/CubeBounds.svelte";
+
   import ConwayComponent from "components/conway.js";
   import Rotator from "components/rotator.js";
+  import ConwaySeed from "components/conway-seed.js";
+  import ConwaySystem from "systems/conway.js";
 
   AFRAME.registerSystem(ConwaySystem.name, ConwaySystem);
   AFRAME.registerComponent(ConwayComponent.name, ConwayComponent);
   AFRAME.registerComponent(Rotator.name, Rotator);
+  AFRAME.registerComponent(ConwaySeed.name, ConwaySeed);
 
   const gridSize = window.CONWAY_GRID_SIZE;
   const cellSize = window.CONWAY_CELL_SIZE;
@@ -18,10 +22,22 @@
     .map(() => new Array(gridSize).fill(null));
 </script>
 
-<a-entity rotator="speed:0.1">
+<a-entity rotator="speed:0.01">
+  <CubeBounds size={gridSize * cellSize} />
+  <a-sphere
+    position="0 3.75 -5"
+    radius="0.5"
+    color="#22aaFF"
+    opacity="0.8"
+    shadow
+    conway-seed
+    ammo-body="emitCollisionEvents: true;"
+    ammo-shape="type: sphere;" />
   {#each conwayGridEl as row, x}
     {#each row as cell, y}
       <a-box
+        ammo-body="type: kinematic;"
+        ammo-shape="type: box;"
         shadow="cast: true; receive: true"
         scale={`${cellSize} ${cellSize} ${cellSize}`}
         position={`${x * cellSize - offset} 1 ${y * cellSize - offset}`}

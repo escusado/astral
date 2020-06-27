@@ -1,4 +1,4 @@
-const GENERATIONDELAY = 100;
+const GENERATIONDELAY = 50;
 
 import Chroma from "chroma-js";
 import ColorPalletes from "util/color-palletes.js";
