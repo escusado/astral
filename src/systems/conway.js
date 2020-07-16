@@ -1,4 +1,4 @@
-const GENERATIONDELAY = 100;
+const GENERATIONDELAY = 50;
 
 import Chroma from "chroma-js";
 import ColorPalletes from "util/color-palletes.js";
@@ -68,6 +68,34 @@ export default {
 
   amIAlive: function (id) {
     return this.present[id.x][id.y];
+  },
+
+  punchLifeIntoExistance: function (id) {
+    // this.present[id.x][id.y] = Math.round(Math.random());
+
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        let x = id.x + i;
+        let y = id.y + j;
+
+        // mirror edges
+        if (x < 0) {
+          x = this.width + i;
+        }
+        if (y < 0) {
+          y = this.height + j;
+        }
+
+        if (x === this.width) {
+          x = 0;
+        }
+        if (y === this.height) {
+          y = 0;
+        }
+
+        this.present[x][y] = Math.round(Math.random());
+      }
+    }
   },
 
   calculateGeneration: function () {

@@ -9,8 +9,8 @@ export default {
   init: function () {
     this.alive = false;
     this.MIN_Y =
-      window.CONWAY_CELL_SIZE + (Math.random() * window.CONWAY_CELL_SIZE) / 4;
-    MAX_Y = window.CONWAY_CELL_SIZE * 1.8; // 1.8 to prevent the cube to fully go up
+      window.CONWAY_CELL_SIZE + (Math.random() * window.CONWAY_CELL_SIZE) / 5;
+    MAX_Y = window.CONWAY_CELL_SIZE * 0.5 + this.MIN_Y; // 1.8 to prevent the cube to fully go up
   },
 
   tick: function (time, timeDelta) {
@@ -44,7 +44,7 @@ export default {
     // random last color oscilating between the first 10% of the scale
     if (y <= this.MIN_Y) {
       currentColorIndex = Math.round(
-        Math.random() * (this.system.colorScale.length / 8)
+        Math.random() * (this.system.colorScale.length / 10)
       );
     }
 
