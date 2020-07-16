@@ -32,5 +32,9 @@
 <main>
   {#if dependenciesLoaded}
     <MainScene />
+  {:else}
+    <div style="width: 100px; margin: auto; margin-top: 10%;">
+      wait for life...
+    </div>
   {/if}
 </main>
