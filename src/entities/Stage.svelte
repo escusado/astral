@@ -3,10 +3,10 @@
 
   const environment = {
     preset: "dream",
-    // dressingAmount: 1000,
+    dressingAmount: 1000,
     skyType: "gradient",
     skyColor: "#FFF",
-    horizonColor: "#994"
+    horizonColor: "#994",
   };
 </script>
 

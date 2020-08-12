@@ -8,23 +8,23 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "11.0.2",
-    "@rollup/plugin-json": "^4.0.3",
-    "@rollup/plugin-node-resolve": "^7.0.0",
+    "@rollup/plugin-commonjs": "14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
     "aframe": "^1.0.4",
     "aframe-environment-component": "^2.0.0",
     "aframe-physics-system": "^4.0.1",
-    "rollup": "^1.20.0",
+    "rollup": "^2.23.1",
     "rollup-plugin-includepaths": "^0.2.3",
     "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.0.0"
+    "rollup-plugin-svelte": "^5.2.3",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.24.1"
   },
   "dependencies": {
     "chroma-js": "^2.1.0",
     "express": "^4.17.1",
     "http": "^0.0.1-security",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^1.0.5"
   }
 }
