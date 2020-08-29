@@ -1,6 +1,6 @@
 <script>
   window.CONWAY_GRID_SIZE = 15;
-  window.CONWAY_CELL_SIZE = 1.4;
+  window.CONWAY_CELL_SIZE = 1.5;
 
   import CubeBounds from "entities/CubeBounds.svelte";
 

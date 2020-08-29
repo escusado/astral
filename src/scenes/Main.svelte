@@ -9,5 +9,5 @@
 <a-scene physics="driver: ammo;">
   <Stage />
 
-  <Rover />
+  <GameOfLife />
 </a-scene>

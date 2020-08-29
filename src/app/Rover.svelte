@@ -10,13 +10,13 @@
 <a-entity>
 
   <a-plane
-    wireframe="true"
     {width}
     {height}
     segments-width={segmentsWidth}
     segments-height={segmentsHeight}
-    color="hotpink"
-    rotation="-90 0 0" />
+    color="yellow"
+    rotation="-90 0 0"
+    rotator="speed:0.5;" />
 
   <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" />
 </a-entity>
