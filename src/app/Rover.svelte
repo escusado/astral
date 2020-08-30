@@ -10,8 +10,8 @@
 
   /////////////////////////////////////////////////////
 
-  const width = 3;
-  const height = 2;
+  const width = 6;
+  const height = 8;
   const segmentsWidth = width;
   const segmentsHeight = height;
 
@@ -27,7 +27,7 @@
 
 <a-entity>
   <Stage />
-  <a-entity rotator="speed:0.1">
+  <a-entity rotator="speed:0.5">
     <a-plane
       {width}
       {height}
@@ -35,8 +35,7 @@
       segments-width={width}
       segments-height={height}
       color="hotpink"
-      rotation="-90 0 0"
-      wireframe="true" />
+      rotation="-90 0 0" />
   </a-entity>
 
   <!-- <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" /> -->

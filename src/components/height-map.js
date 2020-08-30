@@ -83,66 +83,37 @@ export default {
     SW = v9 = HM[2,1]          SE = vX = HM[2,2]
     
 */
-    // console.log(vertices);
-    const vertexPerRow = this.data.width + 1;
-    const vertexPerCol = this.data.height + 1;
+
     let quadIndex = 0;
+    let currentQuadRow = 0;
+    let currentQuadCol = 0;
     for (let i = 0; i < vertices.length; i += 18) {
-      /* Quadrant vertex coords
-          ----
-          |  |
-          ----
-         NW=[?,?]
-      */
-
-      const row = quadIndex === 0 ? 0 : Math.floor(quadIndex / 18);
-      const col = quadIndex === 0 ? 0 : Math.floor(quadIndex / 18);
-
-      // console.log(">quadIndex", quadIndex);
-      // console.log(">row", row);
-      // console.log(">col", col);
-      // console.log("-------------");
-
-      // const coords = {
-      //   NW: [X, Y],
-      //   NE: [X, Y],
-
-      //   SW: [X, Y],
-      //   SE: [X, Y],
-      // };
-
-      const quadrant = [
-        this.data.heightMap[quadIndex],
-        this.data.heightMap[quadIndex],
-
-        this.data.heightMap[quadIndex],
-        this.data.heightMap[quadIndex],
-      ];
+      const quadrantVertexZValues = {
+        NW: this.data.heightMap[currentQuadRow][currentQuadCol],
+        NE: this.data.heightMap[currentQuadRow][currentQuadCol + 1],
+        SW: this.data.heightMap[currentQuadRow + 1][currentQuadCol],
+        SE: this.data.heightMap[currentQuadRow + 1][currentQuadCol + 1],
+      };
 
       // Triangle 1
-      // vertices[i + 2] = this.data.heightMap[quadIndex];
-      // vertices[i + 5] = this.data.heightMap[quadIndex + 2];
-      // vertices[i + 8] = this.data.heightMap[quadIndex + 1];
+      vertices[i + 2] = quadrantVertexZValues.NW;
+      vertices[i + 5] = quadrantVertexZValues.SW;
+      vertices[i + 8] = quadrantVertexZValues.NE;
 
-      // // Triangle 2
-      // vertices[i + 11] = this.data.heightMap[quadIndex + 2];
-      // vertices[i + 14] = this.data.heightMap[quadIndex + 3];
-      // vertices[i + 17] = this.data.heightMap[quadIndex + 1];
+      // Triangle 2
+      vertices[i + 11] = quadrantVertexZValues.SW;
+      vertices[i + 14] = quadrantVertexZValues.SE;
+      vertices[i + 17] = quadrantVertexZValues.NE;
 
       quadIndex += 1;
+      currentQuadCol += 1;
+      if (currentQuadCol === this.data.width) {
+        currentQuadCol = 0;
+        currentQuadRow += 1;
+      }
     }
 
     this.el.object3D.el.components.geometry.geometry.attributes.position.needsUpdate = true;
     this.el.object3D.el.components.geometry.geometry.computeVertexNormals();
-    // console.log(">", "---", mapIndex);
-
-    // vertices.forEach((vertex) => {
-    //   // console.log(">>>v", vertex);
-    // });
-    // const currentRotation = this.el.object3D.rotation;
-    // this.delta += (timeDelta / 10) * this.data.speed;
-    // this.el.setAttribute("rotation", `0 ${this.delta} 0`);
-    // console.log(">>>", vertices);
-    // debugger;
   },
 };
