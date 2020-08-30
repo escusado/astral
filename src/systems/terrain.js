@@ -5,11 +5,6 @@ import GenerateTerrainTile from "util/GenerateTerrainTile";
 export default {
   name: "terrain",
 
-  schema: {
-    width: { type: "number" },
-    height: { type: "number" },
-  },
-
   init: function () {
     this.entities = [];
   },
@@ -25,26 +20,23 @@ export default {
 
   tick: function (time, timeDelta) {
     this.timeElapsed += timeDelta;
-    if (this.timeElapsed < 1000) {
-      // return;
+    if (this.timeElapsed < 100) {
+      return;
     }
 
     this.timeElapsed = 0;
     this.entities.forEach((entity) => {
       const { height, width } = entity.getAttribute("terrain");
-      setTimeout(() => {
-        const vertexPerRow = height + 1;
-        const vertexPerCol = width + 1;
-        let generatedTerrain = GenerateTerrainTile({
-          width: vertexPerCol,
-          height: vertexPerRow,
-          maxHeight: 2,
-        });
-        const heightMap = generatedTerrain;
-        entity.setAttribute("terrain", {
-          heightMap,
-        });
-      }, 1000);
+      const vertexPerRow = height + 1;
+      const vertexPerCol = width + 1;
+      const heightMap = GenerateTerrainTile({
+        vertexPerCol,
+        vertexPerRow,
+        maxHeight: 2,
+      });
+      entity.setAttribute("terrain", {
+        heightMap,
+      });
     });
   },
 };

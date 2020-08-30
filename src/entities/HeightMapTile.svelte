@@ -11,5 +11,4 @@
   segments-width={width}
   segments-height={height}
   color="hotpink"
-  rotation="-90 0 0"
-  wireframe="true" />
+  rotation="-90 0 0" />

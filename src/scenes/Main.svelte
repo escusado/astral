@@ -35,6 +35,6 @@
   });
 </script>
 
-<a-scene physics="driver: ammo;" ortho>
+<a-scene physics="driver: ammo;">
   <Rover />
 </a-scene>
