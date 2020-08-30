@@ -1,29 +1,6 @@
-export default {
-  name: "height-map",
+/*
+ by http://toy.codes 2020
 
-  schema: {
-    heightMap: { type: "string" },
-    width: { type: "number" },
-    height: { type: "number" },
-  },
-
-  init: function () {
-    this.data.heightMap = JSON.parse(this.data.heightMap);
-    console.log("this.data.heightMap", this.data.heightMap);
-    // window.MYVAR = 0;
-    // setInterval(() => {
-    //   // console.log("tick", window.MYVAR);
-    //   window.MYVAR += 1;
-    //   window.MYVAR = window.MYVAR === 12 ? 0 : window.MYVAR;
-    // }, 1000);
-  },
-
-  tick: function (time, timeDelta) {
-    // debugger;
-    const vertices = this.el.object3D.el.components.geometry.geometry.attributes
-      .position.array;
-
-    /*
  1 Quadrant has 2 Triangles that have 6 vertex combined per Quadrant  
  THREE.PlaneBufferGeometry created by AFrame stores them like:
  0------2
@@ -84,10 +61,32 @@ export default {
     
 */
 
-    let quadIndex = 0;
+export default {
+  name: "terrain",
+
+  schema: {
+    heightMap: { type: "string" },
+    width: { type: "number" },
+    height: { type: "number" },
+  },
+
+  init: function () {
+    this.system.registerMe(this.el);
+    this.data.heightMap = JSON.parse(this.data.heightMap);
+  },
+
+  tick: function (time, timeDelta) {
+    const vertices = this.el.object3D.el.components.geometry.geometry.attributes
+      .position.array;
+
     let currentQuadRow = 0;
     let currentQuadCol = 0;
-    for (let i = 0; i < vertices.length; i += 18) {
+
+    for (
+      let currentQuad = 0;
+      currentQuad < vertices.length;
+      currentQuad += 18 // [x,y,Z] * 3 Vertices per Triangle * 2 Triangles
+    ) {
       const quadrantVertexZValues = {
         NW: this.data.heightMap[currentQuadRow][currentQuadCol],
         NE: this.data.heightMap[currentQuadRow][currentQuadCol + 1],
@@ -96,16 +95,15 @@ export default {
       };
 
       // Triangle 1
-      vertices[i + 2] = quadrantVertexZValues.NW;
-      vertices[i + 5] = quadrantVertexZValues.SW;
-      vertices[i + 8] = quadrantVertexZValues.NE;
+      vertices[currentQuad + 2] = quadrantVertexZValues.NW;
+      vertices[currentQuad + 5] = quadrantVertexZValues.SW;
+      vertices[currentQuad + 8] = quadrantVertexZValues.NE;
 
       // Triangle 2
-      vertices[i + 11] = quadrantVertexZValues.SW;
-      vertices[i + 14] = quadrantVertexZValues.SE;
-      vertices[i + 17] = quadrantVertexZValues.NE;
+      vertices[currentQuad + 11] = quadrantVertexZValues.SW;
+      vertices[currentQuad + 14] = quadrantVertexZValues.SE;
+      vertices[currentQuad + 17] = quadrantVertexZValues.NE;
 
-      quadIndex += 1;
       currentQuadCol += 1;
       if (currentQuadCol === this.data.width) {
         currentQuadCol = 0;

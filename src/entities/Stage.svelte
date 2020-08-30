@@ -17,6 +17,7 @@
     <a-camera
       look-controls="touchEnabled: false;"
       wasd-controls="enabled: true; acceleration:1000;" />
+
   </a-entity>
   <a-entity light="type: ambient; intensity: 0.8;" />
   <a-entity

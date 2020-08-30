@@ -9,8 +9,6 @@ const seedCorners = ({ heightMap, maxHeight }) => {
 };
 
 const GenerateTerrainTile = ({ width, height, maxHeight }) => {
-  console.log(">GenerateTerrainTile", width, height, maxHeight);
-
   let heightMap = new Array(height).fill(0);
   for (let i = 0; i < height; i += 1) {
     heightMap[i] = JSON.parse(JSON.stringify(new Array(width).fill(0)));
