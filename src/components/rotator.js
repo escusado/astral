@@ -15,6 +15,5 @@ export default {
     this.delta += (timeDelta / 10) * this.data.speed;
 
     this.el.setAttribute("rotation", `0 ${this.delta} 0`);
-    console.log(">>>");
   },
 };

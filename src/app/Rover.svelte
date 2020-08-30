@@ -1,22 +1,43 @@
 <script>
   console.log("Rover");
+  import Stage from "entities/Stage.svelte";
+  import heightMap from "components/height-map.js";
+  import rotator from "components/rotator.js";
+  import GenerateTerrainTile from "util/GenerateTerrainTile.js";
 
-  const width = 40;
-  const height = 20;
-  const segmentsWidth = width - 1;
-  const segmentsHeight = height - 1;
+  const Components = [heightMap, rotator];
+  Components.forEach((c) => AFRAME.registerComponent(c.name, c));
+
+  /////////////////////////////////////////////////////
+
+  const width = 3;
+  const height = 2;
+  const segmentsWidth = width;
+  const segmentsHeight = height;
+
+  let generatedTerrain = GenerateTerrainTile({
+    width: width + 1,
+    height: height + 1,
+    maxHeight: 2,
+  });
+
+  console.table(generatedTerrain);
+  const heightMapData = JSON.stringify(generatedTerrain);
 </script>
 
 <a-entity>
+  <Stage />
+  <a-entity rotator="speed:0.1">
+    <a-plane
+      {width}
+      {height}
+      height-map="heightMap:{heightMapData}; height:{height}; width:{width};"
+      segments-width={width}
+      segments-height={height}
+      color="hotpink"
+      rotation="-90 0 0"
+      wireframe="true" />
+  </a-entity>
 
-  <a-plane
-    {width}
-    {height}
-    segments-width={segmentsWidth}
-    segments-height={segmentsHeight}
-    color="yellow"
-    rotation="-90 0 0"
-    rotator="speed:0.5;" />
-
-  <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" />
+  <!-- <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" /> -->
 </a-entity>
