@@ -27,9 +27,19 @@
 
 <a-entity>
   <Stage />
-  <a-entity rotation="0 45 0">
+  <a-entity rotator="speed:0.1">
     <HeightMapTile {width} {height} {heightMapData} />
   </a-entity>
+
+  <a-plane
+    receive
+    width={width * 10}
+    height={height * 10}
+    segments-width="1"
+    segments-height="1"
+    position="0 -0.1 0"
+    shadow="receive: true"
+    rotation="-90 0 0" />
 
   <!-- <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" /> -->
 </a-entity>

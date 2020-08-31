@@ -10,5 +10,5 @@
   terrain="heightMap:{heightMapData}; height:{height}; width:{width};"
   segments-width={width}
   segments-height={height}
-  color="hotpink"
+  shadow="cast: true; receive:true"
   rotation="-90 0 0" />

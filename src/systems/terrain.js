@@ -1,6 +1,7 @@
 import Chroma from "chroma-js";
 import ColorPalletes from "util/color-palletes.js";
 import GenerateTerrainTile from "util/GenerateTerrainTile";
+import RandomHeightMap from "util/RandomHeightMap";
 
 export default {
   name: "terrain",
@@ -20,7 +21,7 @@ export default {
 
   tick: function (time, timeDelta) {
     this.timeElapsed += timeDelta;
-    if (this.timeElapsed < 2000) {
+    if (this.timeElapsed < 1000) {
       return;
     }
 
@@ -29,11 +30,17 @@ export default {
       const { height, width } = entity.getAttribute("terrain");
       const vertexPerRow = height + 1;
       const vertexPerCol = width + 1;
-      const heightMap = GenerateTerrainTile({
+
+      const heightMap = RandomHeightMap.generate({
         vertexPerCol,
         vertexPerRow,
         maxHeight: 3,
       });
+      // const heightMap = GenerateTerrainTile({
+      //   vertexPerCol,
+      //   vertexPerRow,
+      //   maxHeight: 3,
+      // });
       entity.setAttribute("terrain", {
         heightMap,
       });

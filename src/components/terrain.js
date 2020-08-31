@@ -73,9 +73,12 @@ export default {
   init: function () {
     this.system.registerMe(this.el);
     this.data.heightMap = JSON.parse(this.data.heightMap);
+    this.currentHeightMap = JSON.parse(JSON.stringify(this.data.heightMap));
+    this.animationDelta = 0;
   },
 
   tick: function (time, timeDelta) {
+    this.tweenHeightMap(timeDelta);
     const vertices = this.el.object3D.el.components.geometry.geometry.attributes
       .position.array;
 
@@ -88,10 +91,10 @@ export default {
       currentQuad += 18 // [x,y,Z] * 3 Vertices per Triangle * 2 Triangles
     ) {
       const quadrantVertexZValues = {
-        NW: this.data.heightMap[currentQuadRow][currentQuadCol],
-        NE: this.data.heightMap[currentQuadRow][currentQuadCol + 1],
-        SW: this.data.heightMap[currentQuadRow + 1][currentQuadCol],
-        SE: this.data.heightMap[currentQuadRow + 1][currentQuadCol + 1],
+        NW: this.currentHeightMap[currentQuadRow][currentQuadCol],
+        NE: this.currentHeightMap[currentQuadRow][currentQuadCol + 1],
+        SW: this.currentHeightMap[currentQuadRow + 1][currentQuadCol],
+        SE: this.currentHeightMap[currentQuadRow + 1][currentQuadCol + 1],
       };
 
       // Triangle 1
@@ -113,5 +116,24 @@ export default {
 
     this.el.object3D.el.components.geometry.geometry.attributes.position.needsUpdate = true;
     this.el.object3D.el.components.geometry.geometry.computeVertexNormals();
+  },
+
+  tweenHeightMap: function (timeDelta) {
+    this.animationDelta += Math.abs(timeDelta / 1000);
+    this.animationDelta = this.animationDelta >= 1 ? 0 : this.animationDelta;
+
+    const animationFactor = this.easeInOutQuart(this.animationDelta);
+    this.currentHeightMap.forEach((row, y) => {
+      row.forEach((col, x) => {
+        this.currentHeightMap[x][y] =
+          this.animationDelta *
+            (this.data.heightMap[x][y] - this.currentHeightMap[x][y]) +
+          this.currentHeightMap[x][y];
+      });
+    });
+  },
+
+  easeInOutQuart: function (t) {
+    return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
   },
 };

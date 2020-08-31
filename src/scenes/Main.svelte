@@ -35,6 +35,6 @@
   });
 </script>
 
-<a-scene physics="driver: ammo;">
+<a-scene physics="driver: ammo;" shadow="type: pcfsoft">
   <Rover />
 </a-scene>
