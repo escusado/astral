@@ -16,7 +16,9 @@ const diamondStep = (x, y, stepSize, heightMap) => {
     SE: heightMap[y][stepSize],
   };
 
-  return (c.NW * c.NE * c.SW * c.SE) / 4;
+  const average = (c.NW * c.NE * c.SW * c.SE) / 4;
+  console.log(">>>>", c, stepSize);
+  return average;
 };
 
 const squareStep = (x, y, stepSize, heightMap) => {
@@ -34,13 +36,14 @@ const squareStep = (x, y, stepSize, heightMap) => {
   const Ly = y - halfStep < 0 ? 0 : y - halfStep;
 
   const d = {
-    T: heightMap[Tx][y],
-    R: heightMap[x][Ry],
-    B: heightMap[Bx][y],
-    L: heightMap[x][Ly],
+    T: heightMap[Tx][y] | (Math.random() * 2),
+    R: heightMap[x][Ry] | (Math.random() * 2),
+    B: heightMap[Bx][y] | (Math.random() * 2),
+    L: heightMap[x][Ly] | (Math.random() * 2),
   };
-
-  return (d.T * d.R * d.B * d.L) / 4;
+  const average = (d.T * d.R * d.B * d.L) / 4;
+  // console.log(">>>>", average);
+  return average;
 };
 
 const GenerateTerrainTile = ({ vertexPerCol, vertexPerRow, maxHeight }) => {
@@ -52,51 +55,45 @@ const GenerateTerrainTile = ({ vertexPerCol, vertexPerRow, maxHeight }) => {
   heightMap = seedCorners({ heightMap, maxHeight });
 
   let stepSize = vertexPerCol - 1;
-  let entropy = Math.random() * maxHeight;
+  let entropy = 0.8;
 
   while (stepSize > 1) {
+    console.log("==============>>>", entropy);
     const halfStep = stepSize / 2;
     for (let x = 0; x < vertexPerCol - 1; x += stepSize) {
       for (let y = 0; y < vertexPerRow - 1; y += stepSize) {
         heightMap[x + halfStep][y + halfStep] =
           diamondStep(x, y, stepSize, heightMap) + entropy;
+
+        heightMap[x][y + halfStep] =
+          squareStep(x, y + halfStep, stepSize, heightMap) + entropy;
+        heightMap[x + halfStep][y] =
+          squareStep(x + halfStep, y, stepSize, heightMap) + entropy;
+        heightMap[x + halfStep][y + stepSize] =
+          squareStep(x + halfStep, y + stepSize, stepSize, heightMap) + entropy;
+        heightMap[x + stepSize][y + halfStep] =
+          squareStep(x + stepSize, y + halfStep, stepSize, heightMap) + entropy;
       }
     }
 
-    for (let x = 0; x < vertexPerCol - 1; x += stepSize) {
-      for (let y = 0; y < vertexPerRow - 1; y += stepSize) {
-        heightMap[x][y + halfStep] = squareStep(
-          x,
-          y + halfStep,
-          stepSize,
-          heightMap
-        );
-        heightMap[x + halfStep][y] = squareStep(
-          x + halfStep,
-          y,
-          stepSize,
-          heightMap
-        );
-        heightMap[x + halfStep][y + stepSize] = squareStep(
-          x + halfStep,
-          y + stepSize,
-          stepSize,
-          heightMap
-        );
-        heightMap[x + stepSize][y + halfStep] = squareStep(
-          x + stepSize,
-          y + halfStep,
-          stepSize,
-          heightMap
-        );
-      }
-    }
+    // for (let x = 0; x < vertexPerCol - 1; x += stepSize) {
+    //   for (let y = 0; y < vertexPerRow - 1; y += stepSize) {
+    // heightMap[x][y + halfStep] =
+    //   squareStep(x, y + halfStep, stepSize, heightMap) + entropy;
+    // heightMap[x + halfStep][y] =
+    //   squareStep(x + halfStep, y, stepSize, heightMap) + entropy;
+    // heightMap[x + halfStep][y + stepSize] =
+    //   squareStep(x + halfStep, y + stepSize, stepSize, heightMap) + entropy;
+    // heightMap[x + stepSize][y + halfStep] =
+    //   squareStep(x + stepSize, y + halfStep, stepSize, heightMap) + entropy;
+    //   }
+    // }
 
     stepSize /= 2;
-    entropy -= Math.random();
+    entropy -= entropy / 3;
     entropy = entropy < 0 ? 0 : entropy;
   }
-  // console.table(heightMap);
+  console.table(heightMap);
 
   return heightMap;
 };

@@ -20,7 +20,7 @@ export default {
 
   tick: function (time, timeDelta) {
     this.timeElapsed += timeDelta;
-    if (this.timeElapsed < 100) {
+    if (this.timeElapsed < 2000) {
       return;
     }
 
@@ -32,7 +32,7 @@ export default {
       const heightMap = GenerateTerrainTile({
         vertexPerCol,
         vertexPerRow,
-        maxHeight: 2,
+        maxHeight: 3,
       });
       entity.setAttribute("terrain", {
         heightMap,

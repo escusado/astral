@@ -27,7 +27,7 @@
 
 <a-entity>
   <Stage />
-  <a-entity rotator="speed:0.5">
+  <a-entity rotation="0 45 0">
     <HeightMapTile {width} {height} {heightMapData} />
   </a-entity>
 
