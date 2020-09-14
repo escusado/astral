@@ -119,8 +119,8 @@ export default {
   },
 
   tweenHeightMap: function (timeDelta) {
-    this.animationDelta += Math.abs(timeDelta / 1000);
-    this.animationDelta = this.animationDelta >= 1 ? 0 : this.animationDelta;
+    this.animationDelta += Math.abs(timeDelta / 5000);
+    this.animationDelta = this.animationDelta >= 1 ? 1 : this.animationDelta;
 
     const animationFactor = this.easeInOutQuart(this.animationDelta);
     this.currentHeightMap.forEach((row, y) => {
@@ -131,6 +131,10 @@ export default {
           this.currentHeightMap[x][y];
       });
     });
+  },
+
+  update: function () {
+    this.animationDelta = 0;
   },
 
   easeInOutQuart: function (t) {

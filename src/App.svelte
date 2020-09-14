@@ -5,6 +5,7 @@
     "/deps/aframe.js",
     "/deps/ammo.wasm.js",
     "/deps/aframe-physics-system-ammo-build.js",
+    "/deps/chroma.min.js",
   ];
 
   // ordered dependency loader
