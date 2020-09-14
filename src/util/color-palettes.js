@@ -1,4 +1,6 @@
-export default [
+import Chroma from "chroma-js";
+
+const ColorPalettes = [
   ["264653", "2A9D8F", "E9C46A", "F4A261", "E76F51"],
   ["E63946", "F1FAEE", "A8DADC", "457B9D", "1D3557"],
   ["FFCDB2", "FFB4A2", "E5989B", "B5838D", "6D6875"],
@@ -286,3 +288,15 @@ export default [
   ["7C6A0A", "BABD8D", "FFDAC6", "FA9500", "EB6424"],
   ["00916E", "FEEFE5", "FFCF00", "EE6123", "FA003F"],
 ];
+
+const getRandomColorPalette = () => {
+  return ColorPalettes[Math.floor(Math.random() * ColorPalettes.length)];
+};
+export const randomColorPallete = getRandomColorPalette();
+export const randomColor =
+  randomColorPallete[Math.floor(Math.random() * randomColorPallete.length)];
+export const randomColorScale = Chroma.scale(randomColorPallete)
+  .mode("lch")
+  .colors(256);
+
+export default ColorPalettes;

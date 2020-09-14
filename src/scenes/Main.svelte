@@ -1,13 +1,12 @@
 <script>
   import Box from "entities/Box.svelte";
   import Stage from "entities/Stage.svelte";
-
   import Rover from "app/Rover.svelte";
-  import GameOfLife from "entities/GameOfLife.svelte";
+  import Ortho from "components/ortho";
+
+  const ortho = AFRAME.registerComponent("ortho", Ortho);
 </script>
 
-<a-scene physics="driver: ammo;">
-  <Stage />
-
-  <GameOfLife />
+<a-scene physics="driver: ammo;" shadow="type: pcfsoft" ortho>
+  <Rover />
 </a-scene>

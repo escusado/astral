@@ -4,7 +4,8 @@
   const Dependencies = [
     "/deps/aframe.js",
     "/deps/ammo.wasm.js",
-    "/deps/aframe-physics-system-ammo-build.js"
+    "/deps/aframe-physics-system-ammo-build.js",
+    "/deps/chroma.min.js",
   ];
 
   // ordered dependency loader
@@ -33,8 +34,6 @@
   {#if dependenciesLoaded}
     <MainScene />
   {:else}
-    <div style="width: 100px; margin: auto; margin-top: 10%;">
-      wait for life...
-    </div>
+    <div style="width: 100px; margin: auto; margin-top: 10%;" />
   {/if}
 </main>
