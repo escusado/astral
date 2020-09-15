@@ -7,6 +7,6 @@
   const ortho = AFRAME.registerComponent("ortho", Ortho);
 </script>
 
-<a-scene physics="driver: ammo;" shadow="type: pcfsoft" ortho>
+<a-scene physics="driver: ammo;" shadow="type: pcfsoft">
   <Rover />
 </a-scene>

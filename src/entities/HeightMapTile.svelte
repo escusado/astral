@@ -7,7 +7,7 @@
 <a-plane
   {width}
   {height}
-  terrain="heightMap:{heightMapData}; height:{height}; width:{width};"
+  height-map="map:{heightMapData}; height:{height}; width:{width};"
   segments-width={width}
   segments-height={height}
   shadow="cast: true"

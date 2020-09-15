@@ -9,7 +9,6 @@ export default {
   },
 
   init: function () {
-    console.log(">>>>", this.scale);
     this.colorIndex = this.data.colorIndex;
     this.delta = this.data.delta;
   },

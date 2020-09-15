@@ -62,18 +62,18 @@
 */
 
 export default {
-  name: "terrain",
+  name: "height-map",
 
   schema: {
-    heightMap: { type: "string" },
+    map: { type: "string" },
     width: { type: "number" },
     height: { type: "number" },
   },
 
   init: function () {
     this.system.registerMe(this.el);
-    this.data.heightMap = JSON.parse(this.data.heightMap);
-    this.currentHeightMap = JSON.parse(JSON.stringify(this.data.heightMap));
+    this.data.map = JSON.parse(this.data.map);
+    this.currentHeightMap = JSON.parse(JSON.stringify(this.data.map));
     this.animationDelta = 0;
   },
 
@@ -127,7 +127,7 @@ export default {
       row.forEach((col, x) => {
         this.currentHeightMap[x][y] =
           this.animationDelta *
-            (this.data.heightMap[x][y] - this.currentHeightMap[x][y]) +
+            (this.data.map[x][y] - this.currentHeightMap[x][y]) +
           this.currentHeightMap[x][y];
       });
     });

@@ -1,7 +1,7 @@
 import RandomHeightMap from "util/RandomHeightMap";
 
 export default {
-  name: "terrain",
+  name: "height-map",
 
   init: function () {
     this.entities = [];
@@ -25,7 +25,7 @@ export default {
 
     this.timeElapsed = 0;
     this.entities.forEach((entity) => {
-      const { height, width } = entity.getAttribute("terrain");
+      const { height, width } = entity.getAttribute("height-map");
       const vertexPerRow = height + 1;
       const vertexPerCol = width + 1;
 
@@ -45,13 +45,8 @@ export default {
             JSON.parse(JSON.stringify(new Array(vertexPerCol).fill(0)))
           );
       }
-      // const heightMap = GenerateTerrainTile({
-      //   vertexPerCol,
-      //   vertexPerRow,
-      //   maxHeight: 3,
-      // });
-      entity.setAttribute("terrain", {
-        heightMap,
+      entity.setAttribute("height-map", {
+        map: heightMap,
       });
     });
   },
