@@ -1,5 +1,5 @@
 <script>
-  import MainScene from "scenes/Main.svelte";
+  import Scene from "Scene.svelte";
 
   const Dependencies = [
     "/deps/aframe.js",
@@ -25,14 +25,13 @@
 <svelte:head>
   {#if reloading}
     <script src={Dependencies[currentDependency]} on:load={onDependencyLoad}>
-
     </script>
   {/if}
 </svelte:head>
 
 <main>
   {#if dependenciesLoaded}
-    <MainScene />
+    <Scene />
   {:else}
     <div style="width: 100px; margin: auto; margin-top: 10%;" />
   {/if}

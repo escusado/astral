@@ -1,4 +1,5 @@
 /*
+
  by http://toy.codes 2020
 
  1 Quadrant has 2 Triangles that have 6 vertex combined per Quadrant  
@@ -71,7 +72,6 @@ export default {
   },
 
   init: function () {
-    this.system.registerMe(this.el);
     this.data.map = JSON.parse(this.data.map);
     this.currentHeightMap = JSON.parse(JSON.stringify(this.data.map));
     this.animationDelta = 0;
