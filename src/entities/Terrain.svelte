@@ -8,17 +8,19 @@
   const chunkVertexPerRow = chunkHeight + 1;
   const chunkVertexPerCol = chunkWidth + 1;
   const totalChunks = 4;
-  const chunks = [];
+  const chunks = new Array(totalChunks).fill(0);
 
+  const map = RandomHeightMap.generate({
+    vertexPerRow: chunkHeight * totalChunks + 1,
+    vertexPerCol: chunkVertexPerCol,
+    maxHeight: 1,
+  });
   for (let i = 0; i < totalChunks; i += 1) {
-    chunks.push(
-      RandomHeightMap.generate({
-        vertexPerCol: chunkVertexPerCol,
-        vertexPerRow: chunkVertexPerRow,
-        maxHeight: 1,
-      })
-    );
+    const mapClone = JSON.parse(JSON.stringify(map));
+    const dataChunk = mapClone.splice(i * chunkWidth, chunkVertexPerCol);
+    chunks[i] = dataChunk;
   }
+  console.table(chunks);
 </script>
 
 <a-entity>

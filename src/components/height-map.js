@@ -75,10 +75,10 @@ export default {
     this.data.map = JSON.parse(this.data.map);
     this.currentHeightMap = JSON.parse(JSON.stringify(this.data.map));
     this.animationDelta = 0;
+    this.setMap();
   },
 
-  tick: function (time, timeDelta) {
-    this.tweenHeightMap(timeDelta);
+  setMap: function (params) {
     const vertices = this.el.object3D.el.components.geometry.geometry.attributes
       .position.array;
 
@@ -118,26 +118,31 @@ export default {
     this.el.object3D.el.components.geometry.geometry.computeVertexNormals();
   },
 
-  tweenHeightMap: function (timeDelta) {
-    this.animationDelta += Math.abs(timeDelta / 5000);
-    this.animationDelta = this.animationDelta >= 1 ? 1 : this.animationDelta;
+  // tick: function (time, timeDelta) {
+  //   this.tweenHeightMap(timeDelta);
+  //   this.setMap();
+  // },
 
-    const animationFactor = this.easeInOutQuart(this.animationDelta);
-    this.currentHeightMap.forEach((row, y) => {
-      row.forEach((col, x) => {
-        this.currentHeightMap[x][y] =
-          this.animationDelta *
-            (this.data.map[x][y] - this.currentHeightMap[x][y]) +
-          this.currentHeightMap[x][y];
-      });
-    });
-  },
+  // tweenHeightMap: function (timeDelta) {
+  //   this.animationDelta += Math.abs(timeDelta / 5000);
+  //   this.animationDelta = this.animationDelta >= 1 ? 1 : this.animationDelta;
 
-  update: function () {
-    this.animationDelta = 0;
-  },
+  //   const animationFactor = this.easeInOutQuart(this.animationDelta);
+  //   this.currentHeightMap.forEach((row, y) => {
+  //     row.forEach((col, x) => {
+  //       this.currentHeightMap[x][y] =
+  //         this.animationDelta *
+  //           (this.data.map[x][y] - this.currentHeightMap[x][y]) +
+  //         this.currentHeightMap[x][y];
+  //     });
+  //   });
+  // },
 
-  easeInOutQuart: function (t) {
-    return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
+  // update: function () {
+  //   this.animationDelta = 0;
+  // },
+
+  // easeInOutQuart: function (t) {
+  //   return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+  // },
 };
