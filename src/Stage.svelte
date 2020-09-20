@@ -12,7 +12,7 @@
 
 <a-entity>
   <a-entity
-    position="0 6 6"
+    position="0 6 16"
     rotation={`${AFRAME.utils.device.isMobile() ? -5 : -60} 0 0`}>
     <a-camera
       look-controls="touchEnabled: false;"

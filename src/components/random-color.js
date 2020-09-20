@@ -1,4 +1,5 @@
-import ColorPalletes, { randomColorScale } from "util/color-palettes.js";
+import Chroma from "chroma-js";
+import { getRandomColorPalette } from "util/color-palettes.js";
 
 export default {
   name: "random-color",
@@ -11,6 +12,7 @@ export default {
   init: function () {
     this.colorIndex = this.data.colorIndex;
     this.delta = this.data.delta;
+    this.scale = Chroma.scale(getRandomColorPalette()).mode("lch").colors(256);
   },
 
   tick: function (time, timeDelta) {
@@ -18,11 +20,7 @@ export default {
       this.colorIndex > 254 || this.colorIndex < 1
         ? (this.delta *= -1)
         : this.delta;
-    this.el.setAttribute("color", randomColorScale[this.colorIndex]);
+    this.el.setAttribute("color", this.scale[this.colorIndex]);
     this.colorIndex += this.delta;
-
-    // const currentRotation = this.el.object3D.rotation;
-    // this.delta += (timeDelta / 10) * this.data.speed;
-    // this.el.setAttribute("rotation", `0 ${this.delta} 0`);
   },
 };

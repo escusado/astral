@@ -289,7 +289,7 @@ const ColorPalettes = [
   ["00916E", "FEEFE5", "FFCF00", "EE6123", "FA003F"],
 ];
 
-const getRandomColorPalette = () => {
+export const getRandomColorPalette = () => {
   return ColorPalettes[Math.floor(Math.random() * ColorPalettes.length)];
 };
 export const randomColorPallete = getRandomColorPalette();

@@ -66,6 +66,7 @@ export default {
   name: "height-map",
 
   schema: {
+    chunkId: { type: "number" },
     map: { type: "string" },
     width: { type: "number" },
     height: { type: "number" },
@@ -73,15 +74,18 @@ export default {
 
   init: function () {
     this.data.map = JSON.parse(this.data.map);
-    this.currentHeightMap = JSON.parse(JSON.stringify(this.data.map));
     this.animationDelta = 0;
     this.setMap();
   },
 
-  setMap: function (params) {
-    const vertices = this.el.object3D.el.components.geometry.geometry.attributes
-      .position.array;
-
+  setMap: function () {
+    const chunkMap = this.data.map;
+    const newMesh = new THREE.Mesh(
+      this.el.getObject3D("mesh").geometry.clone(),
+      this.el.getObject3D("mesh").material.clone()
+    );
+    const vertices = newMesh.geometry.attributes.position.array;
+    console.log("vertssices", chunkMap);
     let currentQuadRow = 0;
     let currentQuadCol = 0;
 
@@ -91,10 +95,10 @@ export default {
       currentQuad += 18 // [x,y,Z] * 3 Vertices per Triangle * 2 Triangles
     ) {
       const quadrantVertexZValues = {
-        NW: this.currentHeightMap[currentQuadRow][currentQuadCol],
-        NE: this.currentHeightMap[currentQuadRow][currentQuadCol + 1],
-        SW: this.currentHeightMap[currentQuadRow + 1][currentQuadCol],
-        SE: this.currentHeightMap[currentQuadRow + 1][currentQuadCol + 1],
+        NW: chunkMap[currentQuadRow][currentQuadCol],
+        NE: chunkMap[currentQuadRow][currentQuadCol + 1],
+        SW: chunkMap[currentQuadRow + 1][currentQuadCol],
+        SE: chunkMap[currentQuadRow + 1][currentQuadCol + 1],
       };
 
       // Triangle 1
@@ -113,36 +117,12 @@ export default {
         currentQuadRow += 1;
       }
     }
+    this.el.setObject3D("mesh", newMesh);
+    this.el.getObject3D("mesh").geometry.attributes.position.needsUpdate = true;
+    this.el.getObject3D("mesh").geometry.computeVertexNormals();
 
-    this.el.object3D.el.components.geometry.geometry.attributes.position.needsUpdate = true;
-    this.el.object3D.el.components.geometry.geometry.computeVertexNormals();
+    //set collisions
+    this.el.setAttribute("ammo-body", "type: static");
+    this.el.setAttribute("ammo-shape", "type: mesh");
   },
-
-  // tick: function (time, timeDelta) {
-  //   this.tweenHeightMap(timeDelta);
-  //   this.setMap();
-  // },
-
-  // tweenHeightMap: function (timeDelta) {
-  //   this.animationDelta += Math.abs(timeDelta / 5000);
-  //   this.animationDelta = this.animationDelta >= 1 ? 1 : this.animationDelta;
-
-  //   const animationFactor = this.easeInOutQuart(this.animationDelta);
-  //   this.currentHeightMap.forEach((row, y) => {
-  //     row.forEach((col, x) => {
-  //       this.currentHeightMap[x][y] =
-  //         this.animationDelta *
-  //           (this.data.map[x][y] - this.currentHeightMap[x][y]) +
-  //         this.currentHeightMap[x][y];
-  //     });
-  //   });
-  // },
-
-  // update: function () {
-  //   this.animationDelta = 0;
-  // },
-
-  // easeInOutQuart: function (t) {
-  //   return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  // },
 };

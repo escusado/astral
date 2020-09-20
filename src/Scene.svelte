@@ -21,17 +21,14 @@
 
     <Terrain />
 
-    <!-- <a-plane
-    receive
-    width={width * 10}
-    height={height * 10}
-    segments-width="1"
-    segments-height="1"
-    position="0 -0.01 0"
-    shadow="receive: true"
-    rotation="-90 0 0"
-    color="#FFF" /> -->
+    <a-sphere
+      position="0 2 0"
+      radius="0.5"
+      color="#22aaFF"
+      shadow
+      ammo-body="type: dynamic;"
+      ammo-shape="type: sphere;" />
 
-    <!-- <a-box color="cornflowerblue" width="5" depth="5" position="0 5 0" /> -->
+    <a-box color="cornflowerblue" width="1" depth="1" position="0 2 0" />s
   </a-entity>
 </a-scene>

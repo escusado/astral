@@ -9,10 +9,9 @@
   {position}
   {width}
   {height}
-  height-map="map:{map}; height:{height}; width:{width};"
   segments-width={width}
   segments-height={height}
   shadow="cast: true"
   rotation="-90 0 0"
-  random-color
-  color="#fff" />
+  color="hotpink"
+  height-map="map:{map}; height:{height}; width:{width};" />

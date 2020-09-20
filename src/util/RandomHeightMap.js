@@ -15,7 +15,7 @@ class RandomHeightMap {
     for (let i = 0; i < vertexPerCol; i += 1) {
       heightMap[0][i] = 0;
       heightMap[i][0] = 0;
-      heightMap[vertexPerCol - 1][i] = 0;
+      heightMap[vertexPerRow - 1][i] = 0;
       heightMap[i][vertexPerCol - 1] = 0;
     }
 
