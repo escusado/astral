@@ -7,7 +7,7 @@
   const chunkSegments = 8;
   const mapChunksWidth = 10;
   const mapChunksHeight = 10;
-  const maxHeight = 1;
+  const maxHeight = 0.2;
 
   const chunkSegmentsWidth = chunkSegments;
   const chunkSegmentsHeight = chunkSegments;
@@ -41,7 +41,8 @@
   }
 </script>
 
-<a-entity>
+<a-entity
+  position="-{(chunkSize * chunkSegmentsWidth) / 2} 0 -{(chunkSize * chunkSegmentsHeight) / 2}">
   {#each chunks as row, r}
     {#each row as chunk, c}
       <a-plane

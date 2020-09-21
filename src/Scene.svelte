@@ -6,12 +6,21 @@
   import RotatorComponent from "components/rotator.js";
   import HeightMapComponent from "components/height-map.js";
   import RandomColor from "components/random-color.js";
+  import UserCameraComponent from "components/user-camera.js";
+
+  import UserCameraSystem from "systems/user-camera.js";
+
   import Terrain from "entities/Terrain.svelte";
 
-  const Systems = [];
+  const Systems = [UserCameraSystem];
   Systems.forEach((s) => AFRAME.registerSystem(s.name, s));
 
-  const Components = [HeightMapComponent, RotatorComponent, RandomColor];
+  const Components = [
+    HeightMapComponent,
+    RotatorComponent,
+    RandomColor,
+    UserCameraComponent,
+  ];
   Components.forEach((c) => AFRAME.registerComponent(c.name, c));
 </script>
 
@@ -22,6 +31,7 @@
     <Terrain />
 
     <a-sphere
+      user-camera="isCameraSubject: true;"
       random-color
       position="0 2 0"
       radius="0.2"

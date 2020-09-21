@@ -11,11 +11,9 @@
 </script>
 
 <a-entity>
-  <a-entity
-    position="0 3 4"
-    rotation={`${AFRAME.utils.device.isMobile() ? -5 : -60} 0 0`}>
+  <a-entity user-camera="isCamera: true;" position="0 3 4" rotation="-60 0 0">
     <a-camera
-      look-controls="touchEnabled: false;"
+      look-controls="enabled: false;"
       wasd-controls="enabled: false; acceleration:1000;" />
   </a-entity>
   <a-entity light="color: #fff; type: ambient; intensity: 0.8;" />
