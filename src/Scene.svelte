@@ -22,13 +22,12 @@
     <Terrain />
 
     <a-sphere
+      random-color
       position="0 2 0"
-      radius="0.5"
+      radius="0.2"
       color="#22aaFF"
       shadow
-      ammo-body="type: dynamic;"
-      ammo-shape="type: sphere;" />
-
-    <a-box color="cornflowerblue" width="1" depth="1" position="0 2 0" />s
+      ammo-body="type: dynamic"
+      ammo-shape="type: sphere" />
   </a-entity>
 </a-scene>

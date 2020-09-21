@@ -82,10 +82,9 @@ export default {
     const chunkMap = this.data.map;
     const newMesh = new THREE.Mesh(
       this.el.getObject3D("mesh").geometry.clone(),
-      this.el.getObject3D("mesh").material.clone()
+      this.el.getObject3D("mesh").material
     );
     const vertices = newMesh.geometry.attributes.position.array;
-    console.log("vertssices", chunkMap);
     let currentQuadRow = 0;
     let currentQuadCol = 0;
 
