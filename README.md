@@ -1,2 +1,2 @@
-Aframe
-Svelte
+Install deps then:
+`yarn dev`
