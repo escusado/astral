@@ -4,10 +4,6 @@ const ROLL = { a: -1, d: 1 };
 export default {
   name: "movement",
 
-  // schema: {
-  //   // speed: { type: "number" },
-  // },
-
   init: function () {
     this.key = "";
 
@@ -16,7 +12,7 @@ export default {
       (event) => {
         const key = event.key.toLowerCase();
 
-        if ("wasd".indexOf(key) > -1) {
+        if ("wasd ".indexOf(key) > -1) {
           this.key = key;
         }
       },
@@ -34,13 +30,13 @@ export default {
 
   tick: function (time, timeDelta) {
     if (this.key) {
+      let jump = 0;
+      if (this.key === " ") {
+        jump = 3;
+      }
       this.el.body.setLinearVelocity(
-        new Ammo.btVector3(ROLL[this.key] || 0, 0, PITCH[this.key] || 0)
+        new Ammo.btVector3(ROLL[this.key] || 0, jump, PITCH[this.key] || 0)
       );
     }
-
-    // this.delta += (timeDelta / 10) * this.data.speed;
-    // console.log(">>>", this.delta);
-    // this.el.setAttribute("position", `0 0 ${this.delta}`);
   },
 };
