@@ -7,6 +7,7 @@
   import HeightMapComponent from "components/height-map.js";
   import RandomColor from "components/random-color.js";
   import UserCameraComponent from "components/user-camera.js";
+  import MovementComponent from "components/movement.js";
 
   import UserCameraSystem from "systems/user-camera.js";
 
@@ -20,6 +21,7 @@
     RotatorComponent,
     RandomColor,
     UserCameraComponent,
+    MovementComponent,
   ];
   Components.forEach((c) => AFRAME.registerComponent(c.name, c));
 </script>
@@ -38,6 +40,7 @@
       color="#22aaFF"
       shadow
       ammo-body="type: dynamic"
-      ammo-shape="type: sphere" />
+      ammo-shape="type: sphere"
+      movement />
   </a-entity>
 </a-scene>
