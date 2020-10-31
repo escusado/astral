@@ -54,6 +54,7 @@
         shadow="cast: true"
         rotation="-90 0 0"
         random-color
+        mouse-follower
         height-map="map:{JSON.stringify(chunk)}; height:{chunkSegmentsHeight}; width:{chunkSegmentsWidth};" />
     {/each}
   {/each}

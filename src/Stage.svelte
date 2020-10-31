@@ -13,6 +13,7 @@
 <a-entity>
   <a-entity user-camera="isCamera: true;" position="0 3 4" rotation="-60 0 0">
     <a-camera
+      id="camera"
       look-controls="enabled: false;"
       wasd-controls="enabled: false; acceleration:1000;" />
   </a-entity>
