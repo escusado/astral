@@ -53,10 +53,12 @@
       position="0 2 0"
       radius="0.2"
       shadow
-      mouse-follower="follower:true;" />
+      mouse-follower />
+
     <a-entity
       cursor="fuse: true; fuseTimeout: 500"
-      position="0 0 -1"
+      position="0 0.5 -1"
+      scale="20 20 20"
       geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
       material="color: black; shader: flat" />
   </a-entity>
