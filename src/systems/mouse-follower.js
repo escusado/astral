@@ -12,13 +12,21 @@ export default {
 
   onMouseMove: function (ev) {
     const cameraEl = document.querySelector("#camera");
+    const tilesEl = [...document.querySelectorAll(".terrain-tile")];
+
+    if(tilesEl.length < 1) {
+      return
+    }
+    
+    
+    const tilesObjects = tilesEl.map(tileEl => tileEl.object3D)
     const scene = cameraEl.sceneEl.object3D;
 
     if (this.camera && ev) {
       this.mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
       this.mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
       this.raycaster.setFromCamera(this.mouse, this.camera);
-      let intersects = this.raycaster.intersectObjects(scene.children, true);
+      let intersects = this.raycaster.intersectObjects(tilesObjects, true);
       for (let i = 0; i < intersects.length; i++) {
         this.currentIntersectionPosition = intersects[i].point;
       }

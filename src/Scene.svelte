@@ -8,10 +8,11 @@
   import RandomColor from "components/random-color.js";
   import UserCameraComponent from "components/user-camera.js";
   import MovementComponent from "components/movement.js";
-
   import MouseFollowerComponent from "components/mouse-follower.js";
-  import MouseFollowerSystem from "systems/mouse-follower.js";
+  import EntityFollowerComponent from "components/entity-follower.js";
+  import ArrowHelperComponent from "components/arrow-helper.js";
 
+  import MouseFollowerSystem from "systems/mouse-follower.js";
   import UserCameraSystem from "systems/user-camera.js";
 
   import Terrain from "entities/Terrain.svelte";
@@ -26,6 +27,8 @@
     UserCameraComponent,
     MovementComponent,
     MouseFollowerComponent,
+    EntityFollowerComponent,
+    ArrowHelperComponent,
   ];
   Components.forEach((c) => AFRAME.registerComponent(c.name, c));
 </script>
@@ -38,16 +41,17 @@
 
     <a-sphere
       user-camera="isCameraSubject: true;"
-      random-color
       position="0 2 0"
       radius="0.2"
-      color="#22aaFF"
+      color="red"
       shadow
       ammo-body="type: dynamic"
       ammo-shape="type: sphere"
-      movement />
+      arrow-helper="entityId: rover"
+      entity-follower="entityId: rover" />
 
     <a-sphere
+      id="rover"
       user-camera="isCameraSubject: true;"
       color="hotpink"
       position="0 2 0"

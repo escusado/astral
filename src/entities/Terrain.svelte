@@ -46,6 +46,7 @@
   {#each chunks as row, r}
     {#each row as chunk, c}
       <a-plane
+        class="terrain-tile"
         position="{c * chunkSize} 0 {r * chunkSize}"
         width={chunkSize}
         height={chunkSize}
